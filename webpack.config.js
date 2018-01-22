@@ -1,4 +1,6 @@
 const path = require('path');
+const uglify = require('uglifyjs-webpack-plugin');
+const htmlPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry:{
@@ -16,7 +18,16 @@ module.exports = {
       }
     ]
   },
-  plugins:[],
+  plugins:[
+      new uglify(),
+      new htmlPlugin({
+          minify:{
+              removAttrbuteQuotes:true
+          },
+          hash:true,
+          template:'./src/index.html'
+      })
+  ],
   devServer:{
     contentBase:path.resolve(__dirname,'dist'),
     compress:true,
