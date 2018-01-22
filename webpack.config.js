@@ -8,7 +8,14 @@ module.exports = {
     path:path.resolve(__dirname,'dist'),
     filename:'common.js'
   },
-  module:{},
+  module:{
+    rules:[
+      {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+      }
+    ]
+  },
   plugins:[],
   devServer:{
     contentBase:path.resolve(__dirname,'dist'),
