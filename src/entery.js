@@ -1,3 +1,2 @@
-import css from './css/index.css';
-
+import css from './css/index.css'
 document.getElementById("app").innerHTML = 'aaa'
