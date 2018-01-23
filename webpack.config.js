@@ -1,17 +1,20 @@
 const path = require('path');
-const uglify = require('uglifyjs-webpack-plugin');
-const htmlPlugin = require('html-webpack-plugin');
-const extractTextPlugin = require("extract-text-webpack-plugin");
+const uglify = require('uglifyjs-webpack-plugin');/*压缩JS*/
+const htmlPlugin = require('html-webpack-plugin');/*HTML文件的发布*/
+const extractTextPlugin = require("extract-text-webpack-plugin"); /*分离css/less/sass*/
 
 module.exports = {
+  //入口文件的配置项
   entry:{
     entry:'./src/entery.js'//入口文件
   },
+  //出口文件的配置项
   output:{
     path:path.resolve(__dirname,'dist'),//输出
     filename:'common.js',
     publicPath:'http://172.17.16.236:1717'
   },
+  //模块：例如解读CSS,图片如何转换，压缩
   module:{
     rules:[
       {
@@ -29,9 +32,22 @@ module.exports = {
               limit:500000 //小于500000B的文件转为base64
             }
         }]
+      }, {
+        test:/\.less$/,
+        use: extractTextPlugin.extract({ //less分离
+          fallback: "style-loader",
+          use: [
+            {
+              loader:'css-loader'
+            },
+            {
+              loader:'less-loader'
+            }]
+        }),
       }
     ]
   },
+  //插件，用于生产模版和各项功能
   plugins:[
       new uglify(), //js文件压缩
       new htmlPlugin({ //html文件发布
@@ -43,6 +59,7 @@ module.exports = {
       }),
       new extractTextPlugin('css/index.css')//分离CSS
   ],
+  //配置webpack开发服务功能
   devServer:{
     contentBase:path.resolve(__dirname,'dist'),//配置环境
     compress:true,
