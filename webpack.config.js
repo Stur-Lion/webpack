@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const uglify = require('uglifyjs-webpack-plugin');/*压缩JS*/
 const htmlPlugin = require('html-webpack-plugin');/*HTML文件的发布*/
 const extractTextPlugin = require("extract-text-webpack-plugin"); /*分离css/less/sass*/
@@ -60,7 +61,10 @@ module.exports = {
           hash:true,
           template:'./src/index.html'
       }),
-      new extractTextPlugin('css/index.css')//分离CSS
+      new extractTextPlugin('css/index.css'),//分离CSS
+      new webpack.ProvidePlugin({ /* 全局配置$ */
+        $:"jquery"
+      })
   ],
   //配置webpack开发服务功能
   devServer:{
