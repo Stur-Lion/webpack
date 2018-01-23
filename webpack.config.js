@@ -36,14 +36,17 @@ module.exports = {
         test:/\.less$/,
         use: extractTextPlugin.extract({ //less分离
           fallback: "style-loader",
-          use: [
-            {
-              loader:'css-loader'
-            },
-            {
-              loader:'less-loader'
-            }]
+          use: [{loader:'css-loader'}, {loader:'less-loader'}]
         }),
+      }, {
+        test:/\.(js|jsx)$/,/*babel配置*/
+        use:{
+          loader: "babel-loader",
+          options: {
+            presets:['env','react'] /*也可以使用['es2015','react']*/
+          }
+        },
+        exclude:/node_modules/
       }
     ]
   },

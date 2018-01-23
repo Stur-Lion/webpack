@@ -1,4 +1,7 @@
 import css from './css/index.css'
 import less from './css/back.less'
 
-document.getElementById("app").innerHTML = 'aaa'
+{
+  let a = 'Hello world'
+  document.getElementById("app").innerHTML = a
+}
